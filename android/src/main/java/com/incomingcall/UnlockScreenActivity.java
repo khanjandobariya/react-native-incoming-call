@@ -249,8 +249,6 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
     }
 
     private void sendEvent(String eventName, WritableMap params) {
-        IncomingCallModule.reactContext
-                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-                .emit(eventName, params);
+        IncomingCallModule.sendEvents(eventName,params);
     }
 }

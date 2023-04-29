@@ -13,6 +13,7 @@ import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.bridge.WritableNativeMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 public class IncomingCallModule extends ReactContextBaseJavaModule {
 
@@ -31,6 +32,12 @@ public class IncomingCallModule extends ReactContextBaseJavaModule {
     @Override
     public String getName() {
         return "IncomingCall";
+    }
+
+        public static void sendEvents(String eventName, WritableMap params) {
+        reactContext
+                .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+                .emit(eventName, params);
     }
 
     @ReactMethod
@@ -113,9 +120,7 @@ public class IncomingCallModule extends ReactContextBaseJavaModule {
     public void getExtrasFromHeadlessMode(Promise promise) {
         if (this.headlessExtras != null) {
             promise.resolve(this.headlessExtras);
-
             this.headlessExtras = null;
-
             return;
         }
 
