@@ -41,7 +41,7 @@ public class IncomingCallModule extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void display(String uuid, String name, String avatar, String info, int timeout) {
+    public void display(String uuid, String name, String info, int timeout) {
         if (UnlockScreenActivity.active) {
             return;
         }
@@ -49,7 +49,7 @@ public class IncomingCallModule extends ReactContextBaseJavaModule {
             Bundle bundle = new Bundle();
             bundle.putString("uuid", uuid);
             bundle.putString("name", name);
-            bundle.putString("avatar", avatar);
+
             bundle.putString("info", info);
             bundle.putInt("timeout", timeout);
             Intent i = new Intent(reactContext, UnlockScreenActivity.class);

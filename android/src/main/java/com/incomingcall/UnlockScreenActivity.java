@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.util.Log;
 import android.view.WindowManager;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 import android.view.View;
 import android.os.Vibrator;
@@ -20,19 +20,17 @@ import java.util.TimerTask;
 import android.app.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
-import com.facebook.react.modules.core.DeviceEventManagerModule;
 
-import com.squareup.picasso.Picasso;
 
 public class UnlockScreenActivity extends AppCompatActivity implements UnlockScreenActivityInterface {
 
     private static final String TAG = "MessagingService";
     private TextView tvName;
     private TextView tvInfo;
-    private ImageView ivAvatar;
     private Integer timeout = 0;
     private String uuid = "";
     static boolean active = false;
@@ -40,6 +38,7 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
     private static Ringtone ringtone;
     private static Activity fa;
     private Timer timer;
+    private Button button;
     static UnlockScreenActivity instance;
 
 
@@ -77,10 +76,10 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
 
         fa = this;
         setContentView(R.layout.activity_call_incoming);
-
+        button = (Button) findViewById(R.id.avatar);
         tvName = findViewById(R.id.tvName);
         tvInfo = findViewById(R.id.tvInfo);
-        ivAvatar = findViewById(R.id.ivAvatar);
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -90,17 +89,36 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
             if (bundle.containsKey("name")) {
                 String name = bundle.getString("name");
                 tvName.setText(name);
+                String str = name.toString();
+
+                String[] strArray = str.split(" ");
+                StringBuilder builder = new StringBuilder();
+
+//First name
+                if (strArray.length > 0){
+                    builder.append(strArray[0], 0, 1);
+                }
+//Middle name
+                if (strArray.length > 1){
+                    builder.append(strArray[1], 0, 1);
+                }
+//Surname
+                if (strArray.length > 2){
+                    builder.append(strArray[2], 0, 1);
+                }
+
+                button.setText(builder.toString());
             }
             if (bundle.containsKey("info")) {
                 String info = bundle.getString("info");
                 tvInfo.setText(info);
             }
-            if (bundle.containsKey("avatar")) {
-                String avatar = bundle.getString("avatar");
-                if (avatar != null) {
-                    Picasso.get().load(avatar).transform(new CircleTransform()).into(ivAvatar);
-                }
+
+            if (bundle.containsKey("info")) {
+                String info = bundle.getString("info");
+                tvInfo.setText(info);
             }
+
             if (bundle.containsKey("timeout")) {
                 this.timeout = bundle.getInt("timeout");
             }
@@ -113,7 +131,7 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
         startRinging();
 
 
-        AnimateImage acceptCallBtn = findViewById(R.id.ivAcceptCall);
+        LottieAnimationView acceptCallBtn = findViewById(R.id.ivAcceptCall);
         acceptCallBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

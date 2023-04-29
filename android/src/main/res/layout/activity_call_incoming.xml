@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/background"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
@@ -20,22 +22,28 @@
             android:layout_width="170dp"
             android:layout_height="170dp"
         >
-            <ImageView
-                android:id="@+id/ivAvatar"
+            <Button
+
+                android:id="@+id/avatar"
+                android:clickable="false"
+                android:focusable="false"
+                android:textColor="@android:color/holo_blue_dark"
+                android:textSize="65sp"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:scaleType="fitXY"
                 android:layout_marginTop="20dp"
-                android:src="@drawable/ic_avatar_default"
+                android:background="@drawable/profile_bg"
                 android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-            />
+                android:layout_centerHorizontal="true"/>
+
 
             <ImageView
                 android:id="@+id/ivRing1"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 android:scaleType="fitXY"
+                android:clickable="false"
                 android:layout_marginTop="10dp"
                 android:src="@drawable/ic_ring"
                 android:layout_centerVertical="true"
@@ -47,6 +55,7 @@
                 android:layout_width="170dp"
                 android:layout_height="170dp"
                 android:scaleType="fitXY"
+                android:clickable="false"
                 android:src="@drawable/ic_ring"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
@@ -99,6 +108,7 @@
                 android:layout_height="60dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_decline_call"
+                android:layout_marginTop="10dp"
             />
             <TextView
                 android:id="@+id/tvDecline"
@@ -121,13 +131,15 @@
             android:layout_centerVertical="true"
             android:layout_marginBottom="60dp"
         >
-            <com.incomingcall.AnimateImage
+            <com.airbnb.lottie.LottieAnimationView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:id="@+id/ivAcceptCall"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                app:lottie_rawRes="@raw/call"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
                 android:scaleType="centerInside"
-                android:src="@drawable/ic_accept_call"
-            />
+                android:padding="0dp"/>
             <TextView
                 android:id="@+id/tvAccept"
                 android:layout_width="match_parent"
