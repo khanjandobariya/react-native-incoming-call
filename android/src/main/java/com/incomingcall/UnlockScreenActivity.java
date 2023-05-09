@@ -1,5 +1,6 @@
 package com.incomingcall;
 
+import android.annotation.SuppressLint;
 import android.app.KeyguardManager;
 import android.media.AudioManager;
 import android.media.Ringtone;
@@ -41,6 +42,9 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
     private Button button;
     static UnlockScreenActivity instance;
 
+    private  String UName = "";
+    private  String UChannel = "";
+
 
     public static UnlockScreenActivity getInstance() {
       return instance;
@@ -70,6 +74,7 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
         active = false;
     }
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,9 +91,9 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
             if (bundle.containsKey("uuid")) {
                 uuid = bundle.getString("uuid");
             }
-            if (bundle.containsKey("name")) {
-                String name = bundle.getString("name");
-                tvName.setText(name);
+            if (bundle.containsKey("channelname")) {
+                String name = bundle.getString("channelname");
+                UChannel = name;
                 String str = name.toString();
 
                 String[] strArray = str.split(" ");
@@ -109,11 +114,10 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
 
                 button.setText(builder.toString());
             }
-            if (bundle.containsKey("info")) {
-                String info = bundle.getString("info");
-                tvInfo.setText(info);
+            if (bundle.containsKey("name")) {
+                String name = bundle.getString("name");
+                UName = name;
             }
-
             if (bundle.containsKey("info")) {
                 String info = bundle.getString("info");
                 tvInfo.setText(info);
@@ -123,6 +127,7 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
                 this.timeout = bundle.getInt("timeout");
             }
             else this.timeout = 0;
+            tvName.setText(UChannel.concat(UName));
         }
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
@@ -199,6 +204,8 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
         WritableMap params = Arguments.createMap();
         params.putBoolean("accept", true);
         params.putString("uuid", uuid);
+        params.putString("name", UName);
+        params.putString("channel", UChannel);
         if (timer != null){
           timer.cancel();
         }
@@ -226,6 +233,8 @@ public class UnlockScreenActivity extends AppCompatActivity implements UnlockScr
         WritableMap params = Arguments.createMap();
         params.putBoolean("accept", false);
         params.putString("uuid", uuid);
+        params.putString("name", UName);
+        params.putString("channel", UChannel);
         if (timer != null) {
           timer.cancel();
         }
